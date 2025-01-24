@@ -1,0 +1,86 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Public com.nothing.plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>TranslateResMerger</name>
+
+    <!-- Unique identifier of the com.nothing.plugin. It should be FQN. It cannot be changed between the com.nothing.plugin versions. -->
+    <id>com.nothing.plugin.TranslateResMerger</id>
+
+    <change-notes><![CDATA[
+        <li>1.2 : Bugfix 2024-12-18 </li>
+        <li>1.0 : init 2024-12-12 </li>
+        ]]></change-notes>
+
+    <!-- Plugin version -->
+    <version>1.2</version>
+
+    <!--    <idea-version since-build="173" />-->
+    <idea-version since-build="222" until-build="291.*"/>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="837961426@qq.om" url="https://github.com/EricDuMingTong">TranslateResMerger</vendor>
+
+    <!-- Description of the com.nothing.plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+          <strong><h1>TranslateResMerger</h1></strong>
+            Tool for merging multi-language translation xml files.
+
+         <p> <strong><h2>Tool Implementation</h2></strong>
+          First compare the translated English values/strings.xml and local res/values/strings.xml files,<br>
+          If the character key of translated values/strings.xml exists in the local values/strings.xml, then the translated characters will be
+          The character copy corresponding to the key in strings.xml under the language is overwritten into the values/strings.xml of each local language. If<br>
+          If there is no corresponding language folder locally, a folder will be created first.</p>
+
+           <p> <strong><h2>How to use</h2></strong>
+            <li>Install the plug-in and restart Android Studio </li>
+            <li>Locate the "res" resource directory with the mouse, right-click the pop-up list, and click TranslateResMerger on the bottom menu</li>
+            <li>
+In the pop-up window, select or manually enter the upper-level directory path of the translated values "res" folder in each language, click "Start Merger" and wait for completion</li>
+           </p>
+
+           <p> <strong><h2>Version compatible</h2></strong>
+            Support Android Studio 2022.2.1 and later</p>
+     ]]></description>
+
+ <!--   <description><![CDATA[
+          <strong><h1>TranslateResMerger</h1></strong>
+            合并多语言翻译xml文件的工具.
+
+         <p> <strong><h2>实现原理</h2></strong>
+          首先比对已翻译的英语values/strings.xml和本地res/values/strings.xml两个文件，<br>
+          如果本地values/strings.xml中存在已翻译values/strings.xml的字符key，则把已翻译各<br>
+          语言下strings.xml中的该key对应的字符文案覆盖到本地各语言values/strings.xml下，如果<br>
+          本地没有对应语言文件夹，会先创建文件夹。</p>
+
+           <p> <strong><h2>使用方法</h2></strong>
+            <li>安装插件，重启Android Studio </li>
+            <li>鼠标定位"res"资源目录，右键弹出列表中，点击底部菜单TranslateResMerger</li>
+            <li>在弹出窗口中，选择或手动输入已翻译各语言values文件夹上级目录路径，点击"开始合并"，等待完成</li>
+           </p>
+
+           <p> <strong><h2>版本支持</h2></strong>
+              支持Android Studio 2022.2.1及以后版本</p>
+     ]]></description>-->
+
+    <!-- Product and com.nothing.plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.kotlin</depends>
+
+    <!-- Extension points defined by the com.nothing.plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij"/>
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK2="true" />
+    </extensions>
+
+    <actions>
+        <action id="StringMergeAction" class="com.nothing.plugin.TranslateResMergerAction" text="TranslateResMerger">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
