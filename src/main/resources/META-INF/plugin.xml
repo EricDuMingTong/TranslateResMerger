@@ -79,8 +79,26 @@ In the pop-up window, select or manually enter the upper-level directory path of
     </extensions>
 
     <actions>
-        <action id="StringMergeAction" class="com.nothing.plugin.TranslateResMergerAction" text="TranslateResMerger">
+        <action id="StringMergeAction" class="com.nothing.plugin.TranslateResMergerAction" text="TranslateResMerger" description="this is a demo">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
+
+<!--    <group
+            id="org.intellij.sdk.action.GroupedActions"
+            text="Static Grouped Actions"
+            popup="true"
+            icon="SdkIcons.Sdk_default_icon">
+        <add-to-group
+                group-id="ToolsMenu"
+                anchor="after"
+                relative-to-action="org.intellij.sdk.action.PopupDialogAction"/>
+        <action
+                class="org.intellij.sdk.action.PopupDialogAction"
+                id="org.intellij.sdk.action.GroupPopDialogAction"
+                text="A Group Action"
+                description="SDK static grouped action example"
+                icon="SdkIcons.Sdk_default_icon">
+        </action>
+    </group>-->
 </idea-plugin>

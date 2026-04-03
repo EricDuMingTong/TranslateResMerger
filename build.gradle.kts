@@ -1,52 +1,58 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.kotlin.jvm") version "2.2.0"
+    id("org.jetbrains.intellij.platform") version "2.3.0"
+}
+
+group = "com.nothing.translatemerge"
+version = "1.4"
+
+repositories {
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation(fileTree(baseDir = "libs"))
+    intellijPlatform {
+        intellijIdeaCommunity("2024.1")
+    }
 }
 
-group = "com.nothing.translatemerge"
-version = "1.2"
+intellijPlatform {
+    pluginConfiguration {
+        name = "TranslateResMerger"
+        version = "1.4"
+        ideaVersion {
+            sinceBuild = "222"
+            untilBuild = "291.*"
+        }
+    }
 
-repositories {
-    mavenCentral()
-}
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2024.1.7")
-    type.set("IC") // Target IDE Platform
-    pluginName.set("TranslateResMerger")
-    plugins.set(listOf(/* Plugin Dependencies */))
+    signing {
+        certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
+        privateKey = providers.environmentVariable("PRIVATE_KEY")
+        password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+    }
+
+    publishing {
+        token = providers.environmentVariable("PUBLISH_TOKEN")
+    }
 }
 
 tasks {
-    // Set the JVM compatibility versions
     withType<JavaCompile> {
         sourceCompatibility = "17"
         targetCompatibility = "17"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
-
-    patchPluginXml {
-        sinceBuild.set("222")
-        untilBuild.set("291.*")
-    }
-
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+    instrumentCode {
+        enabled = false
     }
 }
